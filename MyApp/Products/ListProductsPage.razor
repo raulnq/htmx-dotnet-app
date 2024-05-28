@@ -1,0 +1,59 @@
+﻿<h4>List Products</h4>
+<nav class="navbar hstack gap-3 justify-content-end">
+    <button type="button"
+            hx-get="/products/register"
+            hx-target="#main"
+            hx-swap="innerHTML"
+            class="btn btn-primary">
+        New
+    </button>
+</nav>
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col">
+                <input type="search"
+                       class="form-control"
+                       name="Name"
+                       placeholder="Enter name"
+                       hx-trigger="input changed delay:500ms, search"
+                       hx-get="/products/list"
+                       hx-swap="OuterHTML"
+                       hx-target="#results"
+                       hx-select="#results" />
+
+            </div>
+        </div>
+        <div id="results">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Unit</th>
+                            <th>Price</th>
+                            <th>Is Enabled</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Results)
+                        {
+                            <tr>
+                                <td>@item.ProductId</td>
+                                <td>@item.Name</td>
+                                <td>@item.Unit</td>
+                                <td>@item.Price</td>
+                                <td>@item.IsEnabled</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public List<Product> Results { get; set; } = default!;
+}

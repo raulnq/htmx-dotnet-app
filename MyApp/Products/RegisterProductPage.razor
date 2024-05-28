@@ -1,0 +1,71 @@
+﻿<h4>Register Products</h4>
+<div class="card mb-4">
+    <div class="card-body">
+        <form hx-post="/products/register"
+              hx-target="#main"
+              hx-swap="innerHTML"
+              hx-ext="json-enc">
+            <div class="row mb-4">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="Name" class="form-label">Name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="Name"
+                               name="Name"
+                               placeholder="Enter name"
+                               maxlength=100
+                               required />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="Price" class="form-label">Price</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number"
+                                   class="form-control text-end"
+                                   id="Price"
+                                   name="Price"
+                                   step="0.01"
+                                   min="0.01"
+                                   value="0"
+                                   required />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="Unit" class="form-label">Unit</label>
+                        <select class="form-select"
+                                name="Unit"
+                                id="Unit"
+                                required>
+                            <option value="UN" selected>Unit</option>
+                            <option value="KG">Kilogram</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Description" class="form-label">Description</label>
+                        <textarea class="form-control"
+                                  id="Description"
+                                  name="Description"
+                                  rows="5"
+                                  placeholder="Enter description"
+                                  maxlength=500 />
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <span>Save Changes</span>
+            </button>
+        </form>
+    </div>
+</div>
+@code {
+
+}
