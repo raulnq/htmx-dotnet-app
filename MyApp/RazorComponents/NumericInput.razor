@@ -1,0 +1,43 @@
+﻿<div class="form-group">
+    <label for=@Property class="form-label">@Label</label>
+    @if (string.IsNullOrEmpty(Prefix) && string.IsNullOrEmpty(Sufix))
+    {
+        <input type="number"
+               class="form-control"
+               id=@Property
+               name=@Property
+               @attributes="Attributes" />
+    }
+    else
+    {
+        <div class="input-group">
+            @if (!string.IsNullOrEmpty(Prefix))
+            {
+                <span class="input-group-text">@Prefix</span>
+            }
+            <input type="number"
+                   class="form-control"
+                   id=@Property
+                   name=@Property
+                   @attributes="Attributes" />
+            @if (!string.IsNullOrEmpty(Sufix))
+            {
+                <span class="input-group-text">@Sufix</span>
+            }
+        </div>
+    }
+
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Property { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = default!;
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? Attributes { get; set; }
+    [Parameter]
+    public string Prefix { get; set; } = default!;
+    [Parameter]
+    public string Sufix { get; set; } = default!;
+}

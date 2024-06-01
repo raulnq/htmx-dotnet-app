@@ -1,0 +1,28 @@
+﻿@typeparam TItem
+
+<div class="table-responsive">
+    <table class="table">
+        <thead class="table-light">
+            <tr>@TableHeader</tr>
+        </thead>
+        <tbody>
+            @if (Items is not null && Items.Any())
+            {
+                @foreach (var item in Items)
+                {
+                    <tr>
+                        @RowTemplate(item)
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@code {
+    [Parameter, EditorRequired]
+    public IEnumerable<TItem> Items { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public RenderFragment<TItem> RowTemplate { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public RenderFragment? TableHeader { get; set; } = default!;
+}

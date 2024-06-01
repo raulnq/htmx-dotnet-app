@@ -1,0 +1,20 @@
+﻿<input type="search"
+       class="form-control"
+       name=@Property
+       hx-trigger="input changed delay:500ms, search"
+       hx-get=@HtmxAttributes.Endpoint
+       hx-swap=@HtmxAttributes.Swap
+       hx-target=@HtmxAttributes.Target
+       hx-select=@HtmxAttributes.Select
+       @attributes="Attributes" />
+
+@code {
+    [Parameter, EditorRequired]
+    public string Property { get; set; } = default!;
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? Attributes { get; set; }
+    [Parameter, EditorRequired]
+    public HtmxAttributes HtmxAttributes { get; set; } = default!;
+
+}
+

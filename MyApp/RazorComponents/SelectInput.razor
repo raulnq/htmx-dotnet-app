@@ -1,0 +1,33 @@
+﻿@typeparam TKey where TKey : notnull
+<div class="form-group">
+    <label for=@Property class="form-label">@Label</label>
+    <select class="form-select"
+            name=@Property
+            id=@Property
+            @attributes="Attributes">
+
+        @foreach (var item in Source)
+        {
+            @if (Value != null && Value.Equals(item.Key))
+            {
+                <option value=@item.Key selected>@item.Value</option>
+            }
+            else
+            {
+                <option value=@item.Key>@item.Value</option>
+            }
+        }
+    </select>
+</div>
+@code {
+    [Parameter, EditorRequired]
+    public string Property { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = default!;
+    [Parameter]
+    public TKey Value { get; set; } = default!;
+    [Parameter]
+    public Dictionary<TKey, string> Source { get; set; } = new Dictionary<TKey, string>();
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? Attributes { get; set; }
+}

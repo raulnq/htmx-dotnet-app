@@ -1,0 +1,16 @@
+﻿<button type="button"
+        hx-get=@HtmxAttributes.Endpoint
+        hx-target=@HtmxAttributes.Target
+        hx-swap=@HtmxAttributes.Swap
+        class="@Icon btn btn-primary">
+    New
+</button>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public HtmxAttributes HtmxAttributes { get; set; } = default!;
+    [Parameter]
+    public string Icon { get; set; } = string.Empty;
+}

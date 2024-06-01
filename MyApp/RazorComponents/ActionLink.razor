@@ -1,0 +1,13 @@
+﻿<a class="icon-link"
+   href="#"
+   hx-get=@HtmxAttributes.Endpoint
+   hx-target=@HtmxAttributes.Target
+   hx-swap=@HtmxAttributes.Swap>
+    <span class=@Icon></span>
+</a>
+@code {
+    [Parameter, EditorRequired]
+    public string Icon { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public HtmxAttributes HtmxAttributes { get; set; } = default!;
+}

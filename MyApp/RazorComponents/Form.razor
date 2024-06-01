@@ -1,0 +1,15 @@
+﻿<form hx-post=@HtmxAttributes.Endpoint
+      hx-target=@HtmxAttributes.Target
+      hx-swap=@HtmxAttributes.Swap
+      hx-ext="json-enc">
+    @Content
+    <button type="submit" class="btn btn-primary">
+        <span>Save Changes</span>
+    </button>
+</form>
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment? Content { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public HtmxAttributes HtmxAttributes { get; set; } = default!;
+}

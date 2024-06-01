@@ -1,0 +1,10 @@
+﻿<div class="card mb-4">
+    <div class="card-body">
+        @Content
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment? Content { get; set; } = default!;
+}

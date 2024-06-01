@@ -1,8 +1,8 @@
 ﻿@using MyApp.RazorComponents;
-<h4>Register Product</h4>
+<h4>Edit Product</h4>
 <Section>
     <Content>
-        <Form HtmxAttributes=@(new HtmxAttributes("/products/register","#main", "innerHTML"))>
+        <Form HtmxAttributes=@(new HtmxAttributes($"/products/{Product.ProductId}/edit","#main", "innerHTML"))>
             <Content>
                 <div class="row mb-4">
                     <div class="col-4">
@@ -10,7 +10,9 @@
                                    Label="Name"
                                    placeholder="Enter name"
                                    maxlength=100
-                                   required />
+                                   value=@Product.Name
+                                   disabled
+                                   readonly />
                     </div>
                     <div class="col-4">
                         <NumericInput Property="Price"
@@ -18,13 +20,14 @@
                                       Prefix="$"
                                       step="0.01"
                                       min="0.01"
-                                      value="0"
+                                      value=@Product.Price
                                       required />
                     </div>
                     <div class="col-4">
                         <SelectInput Property="Unit"
                                      Label="Unit"
                                      required
+                                     Value=@Product.Unit.ToString()
                                      Source=@(new Dictionary<string, string>(){{"UN","Unit"},{"KG","Kilogram"}}) />
                     </div>
                 </div>
@@ -33,6 +36,7 @@
                         <TextAreaInput Property="Description"
                                        Label="Description"
                                        rows="5"
+                                       value=@Product.Description
                                        placeholder="Enter description"
                                        maxlength=500 />
                     </div>
@@ -42,5 +46,6 @@
     </Content>
 </Section>
 @code {
-
+    [Parameter, EditorRequired]
+    public Product Product { get; set; } = default!;
 }
