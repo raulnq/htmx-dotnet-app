@@ -6,6 +6,8 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents();
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -16,5 +18,6 @@ app.MapGet("/", () =>
 {
     return new RazorComponentResult<MainPage>();
 });
+app.UseExceptionHandler();
 app.RegisterProductEndpoints();
 app.Run();

@@ -1,10 +1,13 @@
 ﻿<form hx-post=@HtmxAttributes.Endpoint
       hx-target=@HtmxAttributes.Target
       hx-swap=@HtmxAttributes.Swap
+      hx-indicator="#form-spinner"
+      hx-disabled-elt="#form-button"
       hx-ext="json-enc">
     @Content
-    <button type="submit" class="btn btn-primary">
+    <button id="form-button" type="submit" class="btn btn-primary">
         <span>Save Changes</span>
+        <span id="form-spinner" class="spinner-border spinner-border-sm htmx-indicator" />
     </button>
 </form>
 @code {

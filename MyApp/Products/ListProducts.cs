@@ -9,10 +9,14 @@ public static class ListProducts
         public string? Name { get; set; }
     }
 
-    public static async Task<RazorComponentResult> HandlePage([FromServices] MyAppDbContext appDbContext, [AsParameters] Request request)
+    public static async Task<RazorComponentResult> HandlePage(
+        [FromServices] MyAppDbContext appDbContext,
+        [AsParameters] Request request,
+        HttpContext httpContext)
     {
         var name = request.Name ?? string.Empty;
         var results = await appDbContext.Set<Product>().AsNoTracking().Where(p => p.Name.Contains(name)).ToListAsync();
+        httpContext.Response.Headers.Append("HX-Push-Url", $"/products/list");
         return new RazorComponentResult<ListProductsPage>(new { Results = results });
     }
 }

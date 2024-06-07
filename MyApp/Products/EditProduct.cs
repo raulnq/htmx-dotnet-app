@@ -18,13 +18,18 @@ public static class EditProduct
         return new RazorComponentResult<EditProductPage>(new { Product = product });
     }
 
-    public static async Task<RazorComponentResult> HandleAction([FromRoute] Guid productId, [FromServices] MyAppDbContext appDbContext, [FromBody] Request request)
+    public static async Task<RazorComponentResult> HandleAction(
+        [FromRoute] Guid productId,
+        [FromServices] MyAppDbContext appDbContext,
+        [FromBody] Request request,
+        HttpContext httpContext)
     {
         var product = await appDbContext.Set<Product>().FindAsync(productId);
         product.Description = request.Description;
         product.Price = request.Price;
         product.Unit = request.Unit;
         await appDbContext.SaveChangesAsync();
-        return await ListProducts.HandlePage(appDbContext, new ListProducts.Request());
+        httpContext.Response.Headers.Append("HX-Trigger-After-Swap", @$"{{""successEvent"":""The product was edited successfully""}}");
+        return await ListProducts.HandlePage(appDbContext, new ListProducts.Request(), httpContext);
     }
 }

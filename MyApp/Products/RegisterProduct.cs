@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 namespace MyApp.Products;
 public static class RegisterProduct
 {
@@ -16,8 +17,16 @@ public static class RegisterProduct
         return Task.FromResult<RazorComponentResult>(new RazorComponentResult<RegisterProductPage>());
     }
 
-    public static async Task<RazorComponentResult> HandleAction([FromServices] MyAppDbContext appDbContext, [FromBody] Request request)
+    public static async Task<RazorComponentResult> HandleAction(
+        [FromServices] MyAppDbContext appDbContext,
+        [FromBody] Request request,
+        HttpContext httpContext)
     {
+        var any = await appDbContext.Set<Product>().AsNoTracking().AnyAsync(p => p.Name == request.Name);
+        if (any)
+        {
+            throw new InvalidOperationException("The product already exists");
+        }
         var product = new Product()
         {
             ProductId = Guid.NewGuid(),
@@ -29,6 +38,7 @@ public static class RegisterProduct
         };
         appDbContext.Set<Product>().Add(product);
         await appDbContext.SaveChangesAsync();
-        return await ListProducts.HandlePage(appDbContext, new ListProducts.Request());
+        httpContext.Response.Headers.Append("HX-Trigger-After-Swap", @$"{{""successEvent"":""The product was register successfully""}}");
+        return await ListProducts.HandlePage(appDbContext, new ListProducts.Request(), httpContext);
     }
 }
