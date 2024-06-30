@@ -1,4 +1,5 @@
-﻿@using MyApp.RazorComponents;
+﻿@using Microsoft.Extensions.Primitives
+@using MyApp.RazorComponents;
 
 <h4>List Products</h4>
 <nav class="navbar hstack gap-3 justify-content-end">
@@ -12,12 +13,12 @@
             <div class="col">
                 <SearchFilter Property="Name"
                               placeholder="Enter name"
-                              HtmxAttributes=@(new HtmxAttributes("/products/list", "#results", "OuterHTML", "#results")) />
+                              HtmxAttributes=@(new HtmxAttributes("/products/list", "#results", "outerHTML", "#results")) />
 
             </div>
         </div>
         <div id="results">
-            <DataTable Items=@Results
+            <DataTable Items=@Results.Items
                        Context="item">
                 <TableHeader>
                     <th></th>
@@ -41,10 +42,17 @@
                     <td>@item.IsEnabled</td>
                 </RowTemplate>
             </DataTable>
+            <Pagination Page=@Results.Page
+                        PageSize=@Results.PageSize
+                        TotalCount=@Results.TotalCount
+                        Query=@Query
+                        HtmxAttributes=@(new HtmxAttributes("/products/list", "#results", "outerHTML", "#results")) />
         </div>
     </Content>
 </Section>
 @code {
-    [Parameter]
-    public List<Product> Results { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public ListResponse<Product> Results { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public string Query { get; set; } = default!;
 }

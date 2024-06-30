@@ -1,0 +1,105 @@
+﻿@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.Extensions.Primitives
+@using System.Web
+
+<nav class="btn-toolbar">
+    <ul class="pagination">
+        <li class="page-item @(_hasPreviousPage?"":"disabled")">
+            <a class="page-link"
+               href="#"
+               hx-get=@(_hasPreviousPage?GetUri(Page-1, PageSize):string.Empty)
+               hx-swap=@HtmxAttributes.Swap
+               hx-target=@HtmxAttributes.Target
+               hx-select=@HtmxAttributes.Select>Previous</a>
+
+        </li>
+        @for (int i = 1; i <= _totalPages; i++)
+        {
+            <li class="page-item @(Page==i?"active":"")">
+                <a class="page-link"
+                   href="#"
+                   hx-get=@GetUri(i, PageSize)
+                   hx-swap=@HtmxAttributes.Swap
+                   hx-target=@HtmxAttributes.Target
+                   hx-select=@HtmxAttributes.Select>@i</a>
+            </li>
+
+        }
+        <li class="page-item @(_hasNextPage?"":"disabled")">
+            <a class="page-link"
+               href="#"
+               hx-get=@(_hasNextPage?GetUri(Page+1, PageSize):string.Empty)
+               hx-swap=@HtmxAttributes.Swap
+               hx-target=@HtmxAttributes.Target
+               hx-select=@HtmxAttributes.Select>Next</a>
+        </li>
+    </ul>
+    <div class="dropdown ms-auto">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Rows per page (@PageSize)
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item"
+                   hx-get="@GetUri(1, 10)"
+                   hx-swap=@HtmxAttributes.Swap
+                   hx-target=@HtmxAttributes.Target
+                   hx-select=@HtmxAttributes.Select
+                   href="#">10</a>
+            </li>
+            <li>
+                <a class="dropdown-item"
+                   hx-get="@GetUri(1, 20)"
+                   hx-swap=@HtmxAttributes.Swap
+                   hx-target=@HtmxAttributes.Target
+                   hx-select=@HtmxAttributes.Select
+                   href="#">20</a>
+            </li>
+            <li>
+                <a class="dropdown-item"
+                   hx-get="@GetUri(1, 40)"
+                   hx-swap=@HtmxAttributes.Swap
+                   hx-target=@HtmxAttributes.Target
+                   hx-select=@HtmxAttributes.Select
+                   href="#">40</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+
+@code {
+    [Parameter, EditorRequired]
+    public int Page { get; set; } = 1;
+    [Parameter, EditorRequired]
+    public int PageSize { get; set; } = 10;
+    [Parameter, EditorRequired]
+    public int TotalCount { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public HtmxAttributes HtmxAttributes { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public string Query { get; set; } = default!;
+    private int _totalPages;
+    private bool _hasPreviousPage;
+    private bool _hasNextPage;
+
+    protected override void OnParametersSet()
+    {
+        _totalPages = (int)Math.Ceiling(TotalCount / (double)PageSize);
+        _hasPreviousPage = Page > 1;
+        _hasNextPage = Page < _totalPages;
+    }
+
+    public string? GetUri(int page, int pageSize)
+    {
+        var query = HttpUtility.ParseQueryString(Query);
+        query["Page"] = page.ToString();
+        query["PageSize"] = pageSize.ToString();
+        var uriBuilder = new UriBuilder()
+            {
+                Path = HtmxAttributes.Endpoint,
+                Query = query.ToString()
+            };
+        return uriBuilder.Uri.PathAndQuery;
+    }
+}
