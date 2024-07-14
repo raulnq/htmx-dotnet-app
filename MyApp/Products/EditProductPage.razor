@@ -1,5 +1,21 @@
 ﻿@using MyApp.RazorComponents;
 <h4>Edit Product</h4>
+<Breadcrumbs Links=@(new []{
+             new Breadcrumbs.Link("List products", new HtmxAttributes("/products/list", "#main", "innerHTML")),
+             new Breadcrumbs.Link("Edit product")})>
+    <MenuItems>
+        <MenuItem Text="Enable"
+                  IsDisabled=@(Product.IsEnabled)
+                  HtmxAttributes=@(new HtmxAttributes($"/products/{Product.ProductId}/enable", "#main", "innerHTML"){Confirm="Are you sure?"}) />
+        <MenuItem Text="Disable"
+                  IsDisabled=@(!Product.IsEnabled)
+                  Confirm="Are you sure?"
+                  HtmxAttributes=@(new HtmxAttributes($"/products/{Product.ProductId}/disable", "#main", "innerHTML")) />
+    </MenuItems>
+</Breadcrumbs>
+<nav class="navbar hstack gap-3 justify-content-end">
+    <StatusBadge IsEnabled=@Product.IsEnabled />
+</nav>
 <Section>
     <Content>
         <Form HtmxAttributes=@(new HtmxAttributes($"/products/{Product.ProductId}/edit","#main", "innerHTML"))>

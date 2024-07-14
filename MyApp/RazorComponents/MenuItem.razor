@@ -1,0 +1,36 @@
+﻿@if (string.IsNullOrEmpty(Confirm))
+{
+    <li>
+        <a class="dropdown-item @(IsDisabled ? "disabled" :"")"
+           href="#"
+           hx-post=@HtmxAttributes.Endpoint
+           hx-target=@HtmxAttributes.Target
+           hx-confirm=@HtmxAttributes.Confirm
+           hx-swap=@HtmxAttributes.Swap>@Text</a>
+    </li>
+}
+else
+{
+    <li>
+        <a class="dropdown-item @(IsDisabled ? "disabled" :"")"
+           href="#"
+           hx-post=@HtmxAttributes.Endpoint
+           hx-target=@HtmxAttributes.Target
+           hx-confirm=@HtmxAttributes.Confirm
+           hx-swap=@HtmxAttributes.Swap
+           hx-trigger="confirmed"
+           hx-on:click="showConfirm(event,'@Confirm','confirmed')">@Text</a>
+    </li>
+}
+
+
+@code {
+    [Parameter, EditorRequired]
+    public string Text { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public HtmxAttributes HtmxAttributes { get; set; } = default!;
+    [Parameter]
+    public bool IsDisabled { get; set; } = false;
+    [Parameter]
+    public string Confirm { get; set; } = default!;
+}

@@ -9,5 +9,7 @@ public static class Endpoints
         group.MapPost("/register", RegisterProduct.HandleAction);
         group.MapGet("/{productId:guid}/edit", EditProduct.HandlePage);
         group.MapPost("/{productId:guid}/edit", EditProduct.HandleAction);
+        group.MapPost("/{productId:guid}/disable", DisableProduct.HandleAction);
+        group.MapPost("/{productId:guid}/enable", EnableProduct.HandleAction);
     }
 }

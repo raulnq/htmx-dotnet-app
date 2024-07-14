@@ -6,6 +6,7 @@ public class HtmxAttributes
     public string Swap { get; set; } = "innerHTML";
     public string Endpoint { get; set; } = default!;
     public string Select { get; set; } = default!;
+    public string Confirm { get; set; } = default!;
     public HtmxAttributes()
     {
 

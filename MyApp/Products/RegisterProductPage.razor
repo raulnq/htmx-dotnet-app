@@ -1,5 +1,8 @@
 ﻿@using MyApp.RazorComponents;
 <h4>Register Product</h4>
+<Breadcrumbs Links=@(new []{
+             new Breadcrumbs.Link("List products", new HtmxAttributes("/products/list", "#main", "innerHTML")),
+             new Breadcrumbs.Link("Register product")}) />
 <Section>
     <Content>
         <Form HtmxAttributes=@(new HtmxAttributes("/products/register","#main", "innerHTML"))>

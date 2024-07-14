@@ -2,6 +2,7 @@
 @using MyApp.RazorComponents;
 
 <h4>List Products</h4>
+<Breadcrumbs Links=@(new []{new Breadcrumbs.Link("List products")}) />
 <nav class="navbar hstack gap-3 justify-content-end">
     <ActionButton Label="New"
                   Icon="bi bi-plus-lg"

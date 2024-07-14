@@ -1,0 +1,56 @@
+﻿<nav class="d-flex justify-content-between align-middle">
+    <ol class="breadcrumb">
+        @foreach (var link in Links)
+        {
+            if (link.IsActive)
+            {
+                <li class="breadcrumb-item active">@link.Name</li>
+            }
+            else
+            {
+                <li class="breadcrumb-item">
+                    <a href="#"
+                       hx-get=@link.HtmxAttributes!.Endpoint
+                       hx-target=@link.HtmxAttributes!.Target
+                       hx-swap=@link.HtmxAttributes!.Swap>@link.Name</a>
+                </li>
+            }
+        }
+    </ol>
+    @if (MenuItems != null)
+    {
+        <div class="dropdown d-inline">
+            <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu">
+                @MenuItems
+            </ul>
+        </div>
+    }
+</nav>
+
+@code {
+    [Parameter]
+    public RenderFragment? MenuItems { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public IEnumerable<Link> Links { get; set; } = default!;
+
+    public class Link
+    {
+        public HtmxAttributes? HtmxAttributes { get; set; }
+        public string? Name { get; set; }
+        public bool IsActive { get; set; }
+        public Link(string name)
+        {
+            Name = name;
+            IsActive = true;
+        }
+        public Link(string name, HtmxAttributes htmxAttributes)
+        {
+            Name = name;
+            HtmxAttributes = htmxAttributes;
+            IsActive = false;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+﻿@if (IsEnabled)
+{
+    <h5><span class="badge text-bg-success">Enable</span></h5>
+}
+else
+{
+    <h5><span class="badge text-bg-warning">Disable</span></h5>
+}
+@code {
+
+    [Parameter, EditorRequired]
+    public bool IsEnabled { get; set; } = default!;
+}
