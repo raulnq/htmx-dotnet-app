@@ -11,5 +11,7 @@ public static class Endpoints
         group.MapPost("/{productId:guid}/edit", EditProduct.HandleAction);
         group.MapPost("/{productId:guid}/disable", DisableProduct.HandleAction);
         group.MapPost("/{productId:guid}/enable", EnableProduct.HandleAction);
+        group.MapGet("/{productId:guid}/delete", DeleteProduct.HandlePage);
+        group.MapPost("/{productId:guid}/delete", DeleteProduct.HandleAction);
     }
 }

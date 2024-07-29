@@ -1,0 +1,14 @@
+﻿<li>
+    <a class="dropdown-item"
+       href="#"
+       hx-get=@HtmxAttributes.Endpoint
+       hx-target=@HtmxAttributes.Target
+       hx-swap=@HtmxAttributes.Swap>@Text</a>
+</li>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Text { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public HtmxAttributes HtmxAttributes { get; set; } = default!;
+}

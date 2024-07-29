@@ -1,0 +1,20 @@
+﻿@using MyApp.RazorComponents;
+<ModalForm HtmxAttributes=@(new HtmxAttributes($"/products/{ProductId}/delete", "#main"))
+           Title="">
+    <Content>
+        <div class="row mb-4">
+            <div class="col">
+                <TextInput Property=@nameof(DeleteProduct.Request.Reason)
+                           Label="Reason"
+                           maxlength=500
+                           placeholder="Enter reason"
+                           required />
+            </div>
+        </div>
+    </Content>
+</ModalForm>
+
+@code {
+    [Parameter, EditorRequired]
+    public Guid ProductId { get; set; } = default;
+}

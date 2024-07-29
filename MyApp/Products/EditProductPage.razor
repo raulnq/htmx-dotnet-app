@@ -11,6 +11,8 @@
                   IsDisabled=@(!Product.IsEnabled)
                   Confirm="Are you sure?"
                   HtmxAttributes=@(new HtmxAttributes($"/products/{Product.ProductId}/disable", "#main", "innerHTML")) />
+        <ShowModal Text="Delete"
+                   HtmxAttributes=@(new HtmxAttributes($"/products/{Product.ProductId}/delete", "#modal-dialog", "innerHTML")) />
     </MenuItems>
 </Breadcrumbs>
 <nav class="navbar hstack gap-3 justify-content-end">

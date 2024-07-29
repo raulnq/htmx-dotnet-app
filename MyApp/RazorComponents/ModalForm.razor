@@ -1,0 +1,34 @@
+﻿<div class="modal-content">
+    <form hx-post=@HtmxAttributes.Endpoint
+          hx-target=@HtmxAttributes.Target
+          hx-swap=@HtmxAttributes.Swap
+          hx-ext="json-enc"
+          hx-indicator="#modal-form-spinner"
+          hx-disabled-elt="#modal-form-button"
+          hx-select=@HtmxAttributes.Select>
+        <div class="modal-header">
+            <h1 class="modal-title">@Title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            @Content
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="modal-form-button" type="submit" class="btn btn-primary">
+                <span>Save Changes</span>
+                <span id="modal-form-spinner" class="spinner-border spinner-border-sm htmx-indicator" aria-hidden="true" />
+            </button>
+        </div>
+    </form>
+</div>
+
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment? Content { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public HtmxAttributes HtmxAttributes { get; set; } = default!;
+}

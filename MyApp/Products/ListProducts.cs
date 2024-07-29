@@ -19,7 +19,7 @@ public static class ListProducts
     {
         var name = request.Name ?? string.Empty;
         var results = await appDbContext.Set<Product>()
-            .AsNoTracking().Where(p => p.Name.Contains(name)).ToPagedListAsync(page, pageSize);
+            .AsNoTracking().Where(p => p.Name.Contains(name) && p.DeletedAt == null).ToPagedListAsync(page, pageSize);
         var uri = "/products/list".AddQuery(new KeyValuePair<string, StringValues>[]
         {
             new("Name", request.Name),
