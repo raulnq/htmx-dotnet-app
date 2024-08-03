@@ -25,7 +25,16 @@ public static class RegisterProduct
         var any = await appDbContext.Set<Product>().AsNoTracking().AnyAsync(p => p.Name == request.Name);
         if (any)
         {
-            throw new InvalidOperationException("The product already exists");
+            httpContext.Response.Headers.Append("HX-Reswap", $"outerHTML");
+            httpContext.Response.Headers.Append("HX-Retarget", $"#product-form");
+            return new RazorComponentResult<ProductForm>(new
+            {
+                Name = request.Name,
+                NameErrorMessage = "The product already exists",
+                Price = request.Price,
+                Unit = request.Unit.ToString(),
+                Description = request.Description
+            });
         }
         var product = new Product()
         {

@@ -22,43 +22,11 @@
     <Content>
         <Form HtmxAttributes=@(new HtmxAttributes($"/products/{Product.ProductId}/edit","#main", "innerHTML"))>
             <Content>
-                <div class="row mb-4">
-                    <div class="col-4">
-                        <TextInput Property="Name"
-                                   Label="Name"
-                                   placeholder="Enter name"
-                                   maxlength=100
-                                   value=@Product.Name
-                                   disabled
-                                   readonly />
-                    </div>
-                    <div class="col-4">
-                        <NumericInput Property="Price"
-                                      Label="Price"
-                                      Prefix="$"
-                                      step="0.01"
-                                      min="0.01"
-                                      value=@Product.Price
-                                      required />
-                    </div>
-                    <div class="col-4">
-                        <SelectInput Property="Unit"
-                                     Label="Unit"
-                                     required
-                                     Value=@Product.Unit.ToString()
-                                     Source=@(new Dictionary<string, string>(){{"UN","Unit"},{"KG","Kilogram"}}) />
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <TextAreaInput Property="Description"
-                                       Label="Description"
-                                       rows="5"
-                                       value=@Product.Description
-                                       placeholder="Enter description"
-                                       maxlength=500 />
-                    </div>
-                </div>
+                <ProductForm InEdition=true
+                             Name=@Product.Name
+                             Price=@Product.Price
+                             Unit=@Product.Unit.ToString()
+                             Description=@Product.Description />
             </Content>
         </Form>
     </Content>

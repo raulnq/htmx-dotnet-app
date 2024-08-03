@@ -1,10 +1,17 @@
 ﻿<div class="form-group">
     <label for=@Property class="form-label">@Label</label>
     <input type="text"
-           class="form-control"
+           class="form-control @(!string.IsNullOrEmpty(ErrorMessage)?"is-invalid":"")"
            id=@Property
            name=@Property
            @attributes="Attributes" />
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div id=@($"{Property}-error-message") class="invalid-feedback">
+            @ErrorMessage
+        </div>
+    }
+
 </div>
 
 @code {
@@ -14,4 +21,6 @@
     public string Label { get; set; } = default!;
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? Attributes { get; set; }
+    [Parameter]
+    public string ErrorMessage { get; set; } = default!;
 }
